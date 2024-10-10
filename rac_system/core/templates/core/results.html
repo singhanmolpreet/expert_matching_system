@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Match Results</title>
+</head>
+<body>
+    <h1>Interview Assignments</h1>
+    <table border="1">
+        <tr>
+            <th>Expert</th>
+            <th>Candidate</th>
+            <th>Relevancy Score</th>
+        </tr>
+        {% for score in scores %}
+        <tr>
+            <td>{{ score.expert.name }}</td>
+            <td>{{ score.candidate.name }}</td>
+            <td>{{ score.relevancy_score }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
