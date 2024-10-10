@@ -3,6 +3,17 @@ from django.shortcuts import render
 from .models import Expert, Candidate, Score
 from .forms import UploadCSVForm
 from io import TextIOWrapper
+from django.http import HttpResponse
+from django.template.loader import get_template, render_to_string
+from fpdf import FPDF
+
+
+
+import csv
+from django.shortcuts import render
+from .models import Expert, Candidate, Score
+from .forms import UploadCSVForm
+from io import TextIOWrapper
 
 def calculate_relevancy(expert_expertise, candidate_expertise):
     # Handle empty expertise fields
@@ -78,3 +89,39 @@ def upload_and_match(request):
         form = UploadCSVForm()
 
     return render(request, 'core/upload.html', {'form': form})
+
+
+
+def download_pdf(request):
+    # Query all scores for the PDF
+    scores = Score.objects.all()
+
+    # Create a PDF object
+    pdf = FPDF()
+    pdf.add_page()
+
+    # Set font
+    pdf.set_font("Arial", size=12)
+
+    # Add a title
+    pdf.cell(200, 10, txt="Interview Assignments", ln=True, align='C')
+
+    # Add header for the table
+    pdf.set_font("Arial", 'B', size=12)
+    pdf.cell(60, 10, 'Expert', 1)
+    pdf.cell(60, 10, 'Candidate', 1)
+    pdf.cell(60, 10, 'Relevancy Score', 1)
+    pdf.ln()
+
+    # Add data to the table
+    pdf.set_font("Arial", size=12)
+    for score in scores:
+        pdf.cell(60, 10, score.expert.name, 1)
+        pdf.cell(60, 10, score.candidate.name, 1)
+        pdf.cell(60, 10, f"{score.relevancy_score:.2f}", 1)
+        pdf.ln()
+
+    # Set the response
+    response = HttpResponse(pdf.output(dest='S').encode('latin1'), content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="interview_assignments.pdf"'
+    return response
