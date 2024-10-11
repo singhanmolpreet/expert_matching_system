@@ -2,55 +2,49 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Match Results</title>
+    <title>Expert-Candidate Match Results</title>
     <style>
         body {
-            font-family: Arial, sans-serif; /* Set a default font */
-            margin: 20px; /* Margin around the body */
-            background-color: #000; /* Black background */
-            color: #fff; /* White text */
+            font-family: Arial, sans-serif;
+            margin: 20px;
         }
-
         h1 {
-            text-align: center; /* Center the header */
+            color: #333;
         }
-
         table {
-            width: 100%; /* Full width of the table */
-            border-collapse: collapse; /* Collapse borders */
-            margin-bottom: 20px; /* Space below the table */
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
         }
-
         th, td {
-            padding: 10px; /* Padding for cells */
-            border: 1px solid #ccc; /* Light border */
-            text-align: left; /* Left align text */
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
         }
-
         th {
-            background-color: #444; /* Darker gray for header */
-            color: white; /* Header text color */
+            background-color: #f2f2f2;
         }
-
         button {
-            padding: 10px; /* Padding inside the button */
-            background-color: #4CAF50; /* Green background */
-            color: white; /* White text */
-            border: none; /* Remove border */
-            border-radius: 5px; /* Rounded corners */
-            cursor: pointer; /* Pointer cursor on hover */
-            font-size: 16px; /* Font size for the button */
-            transition: background-color 0.3s; /* Transition effect for hover */
-        }
-
-        button:hover {
-            background-color: #45a049; /* Darker green on hover */
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <h1>Interview Assignments</h1>
-    <table border="1">
+    <h1>Expert-Candidate Match Results</h1>
+    <a href="{% url 'download_pdf' %}">
+        <button>Download Results as PDF</button>
+    </a>  <!-- PDF download button -->
+    
+    <table>
         <tr>
             <th>Expert</th>
             <th>Candidate</th>
@@ -64,6 +58,5 @@
         </tr>
         {% endfor %}
     </table>
-    <a href="{% url 'download_pdf' %}"><button>Download Results as PDF</button></a>  <!-- PDF download button -->
 </body>
 </html>
